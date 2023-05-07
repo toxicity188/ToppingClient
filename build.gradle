@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '5.1.0'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+        content {
+            includeGroup 'org.bukkit'
+            includeGroup 'org.spigotmc'
+        }
+    }
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+    maven { url = 'https://repo.skriptlang.org/releases' }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    implementation group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.14"
+    implementation 'com.google.code.gson:gson:2.10.1'
+    compileOnly 'org.jetbrains:annotations:24.0.1'
+
+    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+    compileOnly 'com.github.SkriptLang:Skript:dev37c'
+}
+
+test {
+    useJUnitPlatform()
+}
+shadowJar {
+    setArchivesBaseName("ToppingClient")
+    relocate("org.apache.commons.codec","kor.toxicity.topping.shaded.org.apache.commons.codec")
+    relocate("org.apache.commons.logging","kor.toxicity.topping.shaded.org.apache.commons.logging")
+    relocate("org.apache.http","kor.toxicity.topping.shaded.org.apache.http")
+    relocate("com.google.gson","kor.toxicity.topping.shaded.com.google.gson")
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

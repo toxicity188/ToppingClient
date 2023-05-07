@@ -1,0 +1,8 @@
+name: ToppingClient
+author: toxicity
+description: ToppingClient plugin
+main: kor.toxicity.topping.bukkit.BukkitAPI
+version: 1.0
+api-version: 1.13
+softdepend:
+  - Skript
